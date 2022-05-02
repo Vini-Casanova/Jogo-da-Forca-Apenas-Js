@@ -36,38 +36,73 @@ Escreva o código-fonte APENAS COM OS COMANDOS VISTOS NAS AULAS DA CC1MA. O prog
 
 
 
-
+//Dfinição de variaveis
 var dc = ["batman", "superman", "wonder woman","arlequina","joker"];
 
 var forca = dc[Math.floor(Math.random() * dc.length)]
 
-var vida = 6;
+var vidaStickman =6;
 
-var i = 1;
+var stickman = ["  o","  o \n /","  o \n /|","  o \n /|\\", "  o \n /|\\ \n /", "  o \n /|\\ \n /\\"];
 
-if(forca === "batman") {
-    alert("O personagem é: ??????")
-}else if(forca === "superman") {
-    alert("O personagem é:  ????????")
-}else if(forca === "wonder woman") {
-    alert("O personagem é:  ?????? ?????")
-}else if(forca === "arlequina") {
-    alert("O personagem é:  ?????????")
-}else if(forca === "joker") {
-    alert("O personagem é:  ?????")
+var guess = [];
+
+//Transformando a palavra escolhida em "?"
+for(var i=0;i<=forca.length - 1;i++){
+    guess.push("?")
+}
+
+//Instruções ao Usuário
+alert("O tema é personagens da DC")
+alert("O seu personagem é: "+guess)
+
+
+//Laço de repetição de controle de turnos do jogo
+do{
+   play()
+
+}while(guess.includes("?")==true && vidaStickman != 0);
+
+if(guess.includes("?")==false){
+  alert("Parabens voce ganhou")
+}else{
+    alert("Voce Perdeu")
 }
 
 
 
-do{
-    var tentativa = prompt()
-    if(forca.search(tentativa) === -1){
-      alert("Você errou a letra, seu stick man perde uma parte do corpo:\n"+"  o\n "+"/|\\ \n"+" / \\ \n")
-      vida--
-    }else if(forca.search(tentativa) !== -1){
-        alert("Voce acertou a letra")
+//Funcão de análise e laços do jogo
+function play() {
+    //Jogador Adivinha uma letra
+    alert("Digite uma letra")
+    let adivinhar = prompt();
+
+    //Verifica se a letra está na palavra
+    if(forca.includes(adivinhar)==false){
+        vidaStickman--;
+        alert("Você errou, seu stickman perde um membro do corpo: \n"+ stickman[vidaStickman-1])
+    }else if(forca.includes(adivinhar)==true){
+        if(guess.includes(adivinhar)==true){
+          vidaStickman--;
+          alert("Você repetiu uma letra que ja foi, seu stickman perde um membro: \n"+ stickman[vidaStickman-1])
+        }else{
+            //Laço para adicionar apenas as letras da adivinhação do usuário
+            for(i=0;i<=forca.length;i++){
+                if(adivinhar == forca[i]){
+                    guess[i] = adivinhar
+                }else if(guess[i] != "?"){
+                    guess[i]= guess[i]
+                }else{
+                    guess[i]= "?"
+                }
+                
+             }
+        }
+        
+        alert(guess)
     }
-}while(i <= vida)
+}
+
 
 
 
